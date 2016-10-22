@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Hello Vue</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.2.3/css/bulma.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <section class="section">
+        <div class="container">
+          <h1 class="title">This is me!</h1>
+
+          <p v-for="(value, key, index) in me">
+            {{ index }}: {{ key }} = {{ value }}
+          </p>
+        </div>
+    </div>
+    </section>
+
+  </body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.min.js" charset="utf-8"></script>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        me: {
+          name: 'Kosatas',
+          height: '1.73m',
+          weight: '65kg',
+          eyeColor: 'brown',
+          favoriteFood: 'Ntolmas'
+        }
+      }
+    })
+  </script>
+
+</html>
