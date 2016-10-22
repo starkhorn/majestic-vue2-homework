@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Hello Vue</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>Hello {{ name }}</h1>
+
+      <p><strong>Enter your name:</strong></p>
+      <input type="text" v-model="name"></text>
+    </div>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.min.js" charset="utf-8"></script>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        name: null
+      }
+    })
+  </script>
+
+</html>
