@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>People of Vue</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.2.3/css/bulma.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <section class="section">
+        <div class="container">
+          <h1 class="title">People of Vue</h1>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Votes</th>
+                <th><!-- Actions --></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="candidate in candidates">
+                <td>{{ candidate.name }}</td>
+                <td>{{ candidate.votes }}</td>
+                <td>
+                  <button type="button" @click="vote(candidate)">Vote</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="control">
+            <input
+              type="text"
+              class="input"
+              placeholder="Press 'delete' to reset"
+              @keyup.delete="reset()" />
+          </p>
+
+          <h1 class="title">Our mayor is {{mayor.name}}</h1>
+
+          <pre>
+{{$data}}
+          </pre>
+
+        </div>
+    </div>
+    </section>
+
+  </body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js" charset="utf-8"></script>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        candidates: [{
+          name: 'Mr. Black',
+          votes: 0
+        }, {
+          name: 'Mr. Pink',
+          votes: 0
+        }, {
+          name: 'Mr. White',
+          votes: 0
+        }, {
+          name: 'Mr. Brown',
+          votes: 0
+        }]
+      },
+
+      computed: {
+        mayor: function() {
+          var candidates = this.candidates.slice()
+          var sorted = candidates.sort((a, b) => a.votes - b.votes)
+          var lowest = sorted[0]
+          var highest = sorted[sorted.length - 1]
+
+          if (lowest.votes === highest.votes) {
+            // tie
+            return {}
+          } else {
+            return highest;
+          }
+        }
+      },
+
+      methods: {
+        vote: function(candidate) {
+          candidate.votes++
+        },
+
+        reset: function() {
+          this.candidates.forEach((candidate) => {
+            candidate.votes = 0
+          })
+        }
+      }
+    })
+  </script>
+
+</html>
