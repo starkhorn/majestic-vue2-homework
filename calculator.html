@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Calculator</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.2.3/css/bulma.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <section class="section">
+        <div class="container">
+          <h1 class="title">Type 2 numbers and choose operation.</h1>
+
+          <div class="control is-grouped">
+            <p class="control is-expanded">
+              <input v-model.number="a" type="text" class="input">
+            </p>
+
+            <p class="control">
+              <span class="select">
+                <select v-model="operator">
+                  <option>+</option>
+                  <option>-</option>
+                  <option>*</option>
+                  <option>/</option>
+                </select>
+              </span>
+            </p>
+
+            <p class="control is-expanded">
+              <input v-model.number="b" type="text" class="input">
+            </p>
+          </div>
+
+          <h1 class="title">Result: {{a}} {{operator}} {{b}} = {{c}}</h1>
+          <pre>
+{{$data}}
+          </pre>
+
+        </div>
+    </div>
+    </section>
+
+  </body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.min.js" charset="utf-8"></script>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        a: 1,
+        b: 2,
+        c: null,
+        operator: "+"
+      },
+
+      computed: {
+        c: function() {
+          switch (this.operator) {
+            case '+':
+              return this.a + this.b
+
+            case '-':
+              return this.a - this.b
+
+            case '*':
+              return this.a * this.b
+
+            case '/':
+              return this.a / this.b
+          }
+        }
+      }
+    })
+  </script>
+
+</html>
