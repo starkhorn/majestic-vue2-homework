@@ -13,54 +13,28 @@
         <div class="container">
           <h1 class="title is-1">Let's hear some stories</h1>
 
-          <template v-for="writer in ['Alex', 'John']">
-            <h3 class="title is-3">{{ writer }}'s stories</h3>
+          <stories v-for="writer in ['Alex', 'John']" :stories="storiesBy(writer)" :title="writer + '\'s stories'">
+          </stories>
 
-            <div class="content">
-              <ul>
-                <li v-for="story in storiesBy(writer)">
-                  {{ story.writer }} said "{{ story.plot }}"
-                </li>
-              </ul>
-            </div>
-          </template>
+          <stories :stories="famous" title="Famous stories">
+          </stories>
 
-          <h3 class="title is-3">Famous stories</h3>
-          <div class="content">
-            <ul>
-              <li v-for="story in famous">
-                {{ story.writer }} said "{{ story.plot }}"
-              </li>
-            </ul>
-          </div>
-
-          <h3 class="title is-3">Ordered stories</h3>
-          <div class="content">
-            <ul>
-              <li v-for="story in ordered">
-                {{ story.writer }} said "{{ story.plot }}" and upvoted {{ story.upvotes }} times.
-              </li>
-            </ul>
-
+          <stories :stories="ordered" title="Ordered stories">
             <button class="button is-primary" @click="reverseOrder">Reverse Order</button>
+          </stories>
+
+          <div>
+            <h3 class="title is-3">What are you looking for?</h3>
+
+            <p class="control">
+              <input type="text" class="input" v-model="query" />
+            </p>
+
+            <stories :stories="search" title="Search results:">
+            </stories>
           </div>
 
-          <h3 class="title is-3">What are you looking for?</h3>
-          <p class="control">
-            <input type="text" class="input" v-model="query" />
-          </p>
-          <h4 class="title is-4">Search results:</h4>
-          <div class="content">
-            <ul>
-              <li v-for="story in search">
-                {{ story.writer }} said "{{ story.plot }}"
-              </li>
-            </ul>
-          </div>
-
-          <pre>
-{{$data}}
-          </pre>
+          <pre>{{$data}}</pre>
 
         </div>
     </div>
@@ -68,15 +42,35 @@
 
   </body>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.4/lodash.min.js"></script>
 
+  <template id="stories-template">
+    <div>
+      <h3 class="title is-3">{{ title }}</h3>
+
+      <div class="content">
+        <ul>
+          <li v-for="story in stories">
+            {{ story.writer }} said {{ story.plot }} and upvoted {{ story.upvotes }} times.
+          </li>
+        </ul>
+        <slot></slot>
+      </div>
+    <div>
+  </template>
+
   <script>
+    Vue.component('stories', {
+      props: ['stories', 'title'],
+      template: '#stories-template'
+    })
+
     new Vue({
       el: '#app',
       data: {
         order: 'asc',
-        query: null,
+        query: '',
         stories: [{
           plot: "I crashed my car today!",
           writer: "Alex",
