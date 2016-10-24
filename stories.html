@@ -63,6 +63,13 @@
               </span>
               <span>Vote</span>
             </a>
+
+            <a class="button is-small">
+              <span class="icon is-small">
+                <i class="fa fa-star"></i>
+              </span>
+              <span>Favorite</span>
+            </a>
           </li>
         </ul>
         <slot></slot>
@@ -88,6 +95,7 @@
       data: {
         order: 'asc',
         query: '',
+        favoriteStory: null,
         stories: [{
           plot: "I crashed my car today!",
           writer: "Alex",
