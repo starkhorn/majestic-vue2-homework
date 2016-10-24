@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Stories</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.2.3/css/bulma.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <section class="section">
+        <div class="container">
+          <h1 class="title is-1">Let's hear some stories</h1>
+
+          <template v-for="writer in ['Alex', 'John']">
+            <h3 class="title is-3">{{ writer }}'s stories</h3>
+
+            <div class="content">
+              <ul>
+                <li v-for="story in storiesBy(writer)">
+                  {{ story.writer }} said "{{ story.plot }}"
+                </li>
+              </ul>
+            </div>
+          </template>
+
+          <h3 class="title is-3">Famous stories</h3>
+          <div class="content">
+            <ul>
+              <li v-for="story in famous">
+                {{ story.writer }} said "{{ story.plot }}"
+              </li>
+            </ul>
+          </div>
+
+          <h3 class="title is-3">Ordered stories</h3>
+          <div class="content">
+            <ul>
+              <li v-for="story in ordered">
+                {{ story.writer }} said "{{ story.plot }}" and upvoted {{ story.upvotes }} times.
+              </li>
+            </ul>
+
+            <button class="button is-primary" @click="order = order * -1">Reverse Order</button>
+          </div>
+
+          <h3 class="title is-3">What are you looking for?</h3>
+          <p class="control">
+            <input type="text" class="input" v-model="query" />
+          </p>
+          <h4 class="title is-4">Search results:</h4>
+          <div class="content">
+            <ul>
+              <li v-for="story in search">
+                {{ story.writer }} said "{{ story.plot }}"
+              </li>
+            </ul>
+          </div>
+
+          <pre>
+{{$data}}
+          </pre>
+
+        </div>
+    </div>
+    </section>
+
+  </body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.min.js" charset="utf-8"></script>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        order: 1,
+        query: null,
+        stories: [{
+          plot: "I crashed my car today!",
+          writer: "Alex",
+          upvotes: 28
+        }, {
+          plot: "Yesterday, someone stole my bag!",
+          writer: "John",
+          upvotes: 8
+        }, {
+          plot: "Someone ate my chocolate...",
+          writer: "John",
+          upvotes: 51
+        }, {
+          plot: "I ate someone's chocolate!",
+          writer: "Alex",
+          upvotes: 74
+        }]
+      },
+
+      methods: {
+        storiesBy: function(writer) {
+          return this.stories.filter((story) => {
+            return story.writer === writer
+          })
+        }
+      },
+
+      computed: {
+        famous: function() {
+          return this.stories.filter((story) => {
+            return story.upvotes > 25
+          })
+        },
+
+        search: function() {
+          let query = this.query
+
+          return this.stories.filter((story) => {
+            return story.plot.includes(query)
+          })
+        },
+
+        ordered: function() {
+          let stories = this.stories.slice()
+          let order = this.order
+
+          return stories.sort((a, b) => {
+            return order * (a.upvotes - b.upvotes)
+          })
+        }
+      }
+    })
+  </script>
+
+</html>
