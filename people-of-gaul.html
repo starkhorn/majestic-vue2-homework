@@ -13,6 +13,38 @@
         <div class="container">
           <h1 class="title is-1">People of Gaul</h1>
 
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Age</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="person in sortedPeople">
+                <td>{{ person.name }}</td>
+                <td>{{ person.age }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h1 class="title is-1">"Old" People of Gaul</h1>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Age</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="person in oldPeople">
+                <td>{{ person.name }}</td>
+                <td>{{ person.age }}</td>
+              </tr>
+            </tbody>
+          </table>
+
           <pre>
 {{$data}}
           </pre>
@@ -29,6 +61,7 @@
   <script>
     new Vue({
       el: '#app',
+
       data: {
         people: [{
           name: "Obelix",
@@ -46,6 +79,18 @@
           name: "Julius Caesar",
           age: 66
         }, ]
+      },
+
+      computed: {
+        sortedPeople: function() {
+          return _.orderBy(this.people, "age")
+        },
+
+        oldPeople: function() {
+          return _.filter(this.people, _.conforms({
+            age: (age) => age > 65
+          }))
+        }
       }
     })
   </script>
