@@ -5,6 +5,8 @@
     <title>Stories</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.2.3/css/bulma.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
   </head>
 
   <body>
@@ -52,7 +54,15 @@
       <div class="content">
         <ul>
           <li v-for="story in stories">
-            {{ story.writer }} said {{ story.plot }} and upvoted {{ story.upvotes }} times.
+            <span>
+              {{ story.writer }} said {{ story.plot }} and upvoted {{ story.upvotes }} times.
+            </span>
+            <a v-if="!story.voted" class="button is-small" @click="upvote(story)">
+              <span class="icon is-small">
+                <i class="fa fa-thumbs-o-up"></i>
+              </span>
+              <span>Vote</span>
+            </a>
           </li>
         </ul>
         <slot></slot>
@@ -63,7 +73,14 @@
   <script>
     Vue.component('stories', {
       props: ['stories', 'title'],
-      template: '#stories-template'
+      template: '#stories-template',
+
+      methods: {
+        upvote: function(story) {
+          story.upvotes += 1
+          story.voted = true
+        }
+      }
     })
 
     new Vue({
@@ -78,7 +95,7 @@
         }, {
           plot: "Yesterday, someone stole my bag!",
           writer: "John",
-          upvotes: 8
+          upvotes: 25
         }, {
           plot: "Someone ate my chocolate...",
           writer: "John",
