@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>People of Gaul</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.2.3/css/bulma.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <section class="section">
+        <div class="container">
+          <h1 class="title is-1">People of Gaul</h1>
+
+          <pre>
+{{$data}}
+          </pre>
+
+        </div>
+    </div>
+    </section>
+
+  </body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.4/lodash.min.js"></script>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        people: [{
+          name: "Obelix",
+          age: 33
+        }, {
+          name: "Asterix",
+          age: 32
+        }, {
+          name: "Majestix",
+          age: 82
+        }, {
+          name: "Methusalix",
+          age: 103
+        }, {
+          name: "Julius Caesar",
+          age: 66
+        }, ]
+      }
+    })
+  </script>
+
+</html>
