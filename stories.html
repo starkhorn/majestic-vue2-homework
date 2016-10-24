@@ -122,10 +122,7 @@
         },
 
         ordered: function() {
-          let stories = this.stories.slice()
-          let order = this.order
-
-          return _.orderBy(this.stories, 'upvotes', order)
+          return _.orderBy(this.stories, 'upvotes', this.order)
         }
       }
     })
